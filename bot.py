@@ -14,22 +14,22 @@ def greet_user(update, context):
     update.message.reply_text('Привет, пользователь! Ты вызвал команду /start')
 
 def talk_to_me(update, context):
-    random_talk_number = randint(0,4)
+    def answer_print (text, text_answer):
+        print (text)
+        update.message.reply_text(text_answer)  
+    random_talk_number = randint(0,4)  
     if random_talk_number == 0:
         text = update.message.text
-        text_answer_1 = 'Приму это к сведению! Может быть, может быть...'
-        print (text)
-        update.message.reply_text(text_answer_1)
+        text_answer = 'Приму это к сведению! Может быть, может быть...'
+        answer_print(text, text_answer)
     elif random_talk_number == 1:
         text = update.message.text
-        text_answer_1 = f'{text} - говоришь ты) а я что? Я примус починяю!'
-        print (text)
-        update.message.reply_text(text_answer_1) 
+        text_answer = f'{text} - говоришь ты) а я что? Я примус починяю!'
+        answer_print(text, text_answer)
     elif random_talk_number == 2:
         text = update.message.text
-        text_answer_2 = text[::-1]
-        print (text)
-        update.message.reply_text(text_answer_2) 
+        text_answer = text[::-1]
+        answer_print(text, text_answer)
     elif random_talk_number == 3:
         text = update.message.text
         text_splits = text.split()
@@ -40,24 +40,30 @@ def talk_to_me(update, context):
         for reverse_word in reversed(text_splits_reversed):
             text_splits_reversed.append(reverse_word)
             text_splits_reversed.remove(reverse_word)
-            text_answer_3 = ' '.join(text_splits_reversed)            
-        print (text)
-        update.message.reply_text(text_answer_3)
+            text_answer = ' '.join(text_splits_reversed)            
+        answer_print(text, text_answer)
     else:
         text = update.message.text
-        random_sticker_number = randint(0,4)
-        if random_sticker_number == 0:
-            sticker_bot = 'CAACAgIAAxkBAAEDV3xhnBTrsL951NGnA5hi9iQULPVnFAACeQADkkPGLdMIosFTpWvhIgQ'
-        elif random_sticker_number == 1:
-            sticker_bot = 'CAACAgIAAxkBAAEDV4JhnBhF-RshQSAgw8l9np9QRrJZtgACeQIAAladvQr_E3Q_a7YvniIE'
-        elif random_sticker_number == 2:
-            sticker_bot = 'CAACAgEAAxkBAAEDV4RhnBhi77WVJxOwU5s952HWo5g0JwAC5ggAAuN4BAAB2g8zsbmcSxEiBA'
-        elif random_sticker_number == 3:
-            sticker_bot = 'CAACAgIAAxkBAAEDV4ZhnBi0d9BfxUohJbODUKoosuINgQACSQEAAntOKhDSitDV6aV93yIE'
-        else:
-            sticker_bot = 'CAACAgQAAxkBAAEDV4hhnBj64mhT-1_v3we8tQUgzz0LEQACZgADgBs8A5etJKHD5zZ5IgQ'    
+        stickers_id = ['CAACAgIAAxkBAAEDV3xhnBTrsL951NGnA5hi9iQULPVnFAACeQADkkPGLdMIosFTpWvhIgQ',
+                       'CAACAgIAAxkBAAEDV4JhnBhF-RshQSAgw8l9np9QRrJZtgACeQIAAladvQr_E3Q_a7YvniIE',
+                       'CAACAgEAAxkBAAEDV4RhnBhi77WVJxOwU5s952HWo5g0JwAC5ggAAuN4BAAB2g8zsbmcSxEiBA',
+                       'CAACAgIAAxkBAAEDV4ZhnBi0d9BfxUohJbODUKoosuINgQACSQEAAntOKhDSitDV6aV93yIE',
+                       'CAACAgQAAxkBAAEDV4hhnBj64mhT-1_v3we8tQUgzz0LEQACZgADgBs8A5etJKHD5zZ5IgQ',
+                       'CAACAgIAAxkBAAEDWiFhnhOC3401IPsnRdAM3oaZIlUxjwACoAADq1fEC2nC4av5TKV7IgQ',
+                       'CAACAgIAAxkBAAEDWiNhnhOLbCB8-UH0IcKAQRIch25a8gACLQADOcGJDNQzp1v1ga4qIgQ',
+                       'CAACAgIAAxkBAAEDWiVhnhOhUXhLiXu__1qG2OfJ5Sd-0gACIAEAArhdDQABIeLrSJePA_QiBA',
+                       'CAACAgQAAxkBAAEDWidhnhOkr5APAgX0A7-iswRP9nNtjwACJwAD9ZhQCxU-2boU4tbCIgQ',
+                       'CAACAgIAAxkBAAEDWilhnhOsZQAB_fIvssodp0HLRZYO6h0AAjMUAAILcJhKyY19ErwBvuoiBA']
+        random_sticker_number = randint(0,9)
+        sticker_id = stickers_id [random_sticker_number]
         print (text)
-        update.message.reply_sticker(sticker_bot)
+        update.message.reply_sticker(sticker_id)
+
+def answer_step_1 ():
+    text = update.message.text
+    text_answer = 'Приму это к сведению! Может быть, может быть...'
+    print (text)
+    update.message.reply_text(text_answer)
 
 def main():
     mybot = Updater(settings.API_KEY, use_context=True, request_kwargs=PROXY)
